@@ -10,7 +10,21 @@ function usage() {
 # Pingsweep command for the Onyx nodes
 function pingsweep_cmd() {
 	local base="onyxnode"
+	local found=0
+	local total=0
 	echo "Pinging nodes... TBD"
+	for i in {1..10}; do
+		local node="${base}${i}"
+		ping -c 1 -W 1 "${node}" &> /dev/null
+		if [ $? -eq 0 ]; then
+			echo "Node ${node} is reachable."
+			found=$((found + 1))
+		else
+			echo "Node ${node} is not reachable."
+		fi
+		total=$((total + 1))
+	done
+
 }
 
 function main() {
